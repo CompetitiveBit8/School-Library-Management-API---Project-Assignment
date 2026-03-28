@@ -50,20 +50,20 @@ router
             }
         })
         .put((req, res) =>{
-            res.send(req.params.id)
+            try {
+                
+            } catch (error) {
+                return res.status(500).json({error: error.message})
+            }
         })
         .delete((req, res) =>{
-            res.send(req.params.id)
+            const id = res.params.id
+
+            const deletebook = Book.findByIdAndDelete({id})
+            return res.status(201).json({"message": "Record deleted"})
 });
 
-router.all('/:id/borrow', (req, res) => {
-    res.send(`This is the borrow parameter with param as ${req.params.id} under borrow.`)
-})
 
-
-router.all('/:id/return', (req, res) => {  
-    res.send(`This is the return parameter with param as ${req.params.id} under return.`)
-})
 
 
 export default router;

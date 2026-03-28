@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
         const authorExists = await Author.findOne({name: newAuthor})
         
         if (authorExists){ 
-          return res.status(401).json(`Author, ${newAuthor} already exists`)
+          return res.status(401).json({"message": `Author, ${newAuthor} already exists`})
         }
         //if not
         const newAuthorSave = new Author({
@@ -21,6 +21,7 @@ router.post('/', async (req, res) => {
         const savedAuthor = await newAuthorSave.save()
 
         return res.status(201).json(savedAuthor);
+
     } catch (error) {
         res.status(500).json({error : error.message})
     }
@@ -29,6 +30,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const allAuthors = await Author.find()
+        
+        if (!allAuthors || allAuthors.length === 0){
+            res.send("There are currently no authors in the recoord")
+        }
         res.send(`${allAuthors}`)
     } catch (error) {
         res.status(500).json({error: error.message})
@@ -41,21 +46,42 @@ router
             try {
                 const id = req.params.id
                 const getAuthor = await Author.findById(id)
+
+                if (!getAuthor){
+                    return res.status(500).json({"message":"No author with that Id"})
+                }
+                
                 return res.send(`${getAuthor}`)
             } catch (error) {
                 res.status(500).json({error: error.message})
             }
         })
         .put(async (req, res) =>{
-            const authorId = req.params.id
-            const { name, bio, createdAt } = req.body
-            const updateAuthor = await Author.findByIdAndUpdate(authorId, { name: name, bio: bio })
-            
-            return res.send(`${updateAuthor}`)
+            try {
+                const authorId = req.params.id
+                const { name, bio } = req.body
+
+                const updateAuthor = await Author.findByIdAndUpdate(authorId, { name: name, bio: bio })
+                
+                if (!updateAuthor){
+                    return res.status(500).json({"message":"No author with that Id"})
+                }
+                return res.send(`${updateAuthor}`)
+            } catch (error) {
+                return res.status(500).json({error: error.message})
+            }
         })
         .delete(async (req, res) =>{
-            const deletAuthor =  await Author.findByIdAndDelete(`${req.params.id}`)
-            return res.send(`User deleted`)
+            try {
+                const deletAuthor =  await Author.findByIdAndDelete(`${req.params.id}`)
+                
+                if (!deletAuthor){
+                    return res.status(500).json({"message":"No author with that Id"})
+                }
+                return res.send(`User deleted`)
+            } catch (error) {
+                return res.status(500).json({error: error.message})
+            }
 });
 
 

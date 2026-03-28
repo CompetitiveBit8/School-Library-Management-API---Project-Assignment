@@ -11,10 +11,6 @@ const StudentSchema = mongoose.Schema({
         unique: true
     },
 
-    studentId:{
-        type: String,
-        unique: true
-    },
     createdAt:{
         type: Date,
         default: Date.now
