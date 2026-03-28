@@ -4,22 +4,25 @@ import Book from "../models/bookModel.js"
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { title, isbn, authors, borrowStatus,borrowedBy, issuedBy , returnDate, createdAt } = req.body
-
+    try {
+    const { title, isbn, authors, borrowStatus, borrowedBy, issuedBy , returnDate } = req.body
+        console.log(`${returnDate}`)
     const addNewBook = new Book({ 
         title: title,
         isbn: isbn,
         authors: authors,
         borrowStatus: borrowStatus,
-        borrowStatus: borrowStatus, 
+        borrowedBy: borrowedBy,
         issuedBy: issuedBy,
-        returnDate: returnDate, 
-        createdAt: createdAt
+        returnDate: returnDate
         });
 
-    const saveBooks = addNewBook.save()
+    const saveBooks = await addNewBook.save()
+    return res.status(201).json(saveBooks)
 
-    return res.status(201).json(saveBooks)    
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }    
 });
 
 router.get('/',  async(req, res) => {
@@ -37,11 +40,14 @@ router.get('/',  async(req, res) => {
 
 router
     .route('/:id')
-        .get((req, res) =>{
-            res.send(req.params.id)
-        })
-        .post((req, res) =>{
-            res.send(req.params.id)
+        .get(async (req, res) =>{
+            try {
+                const id = req.params.id
+                const getBook = await Book.findById(id)
+                return res.send(`${getBook}`)
+            } catch (error) {
+                res.status(500).json({error: error.message})
+            }
         })
         .put((req, res) =>{
             res.send(req.params.id)
