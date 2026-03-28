@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
         //confirm if the name inputted exists already
         const authorExists = await Author.findOne({name: newAuthor})
         
-        if (authorExists){
+        if (authorExists){ 
           return res.status(401).json(`Author, ${newAuthor} already exists`)
         }
         //if not
