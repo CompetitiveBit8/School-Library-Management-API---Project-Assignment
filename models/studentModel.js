@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { uuid } from "uuidv4";
 
 const StudentSchema = mongoose.Schema({
     name:{
@@ -11,6 +12,12 @@ const StudentSchema = mongoose.Schema({
         unique: true
     },
 
+    studentId:{
+        type: String,
+        unique: true,
+        default: uuid
+    },
+    
     createdAt:{
         type: Date,
         default: Date.now

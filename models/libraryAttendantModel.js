@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
+// const { v4: uuidv4 } = require('uuid');
 
 const LibraryAttendantSchema = mongoose.Schema({
     name:{
@@ -8,7 +10,8 @@ const LibraryAttendantSchema = mongoose.Schema({
 
     stafftId:{
         type: String,
-        unique: true
+        unique: true,
+        default: uuidv4
     },
     createdAt:{
         type: Date,

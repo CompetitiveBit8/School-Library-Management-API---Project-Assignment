@@ -1,9 +1,24 @@
 import Book from "../models/bookModel.js"
 
-const borrowBook = (req, res) => {
+exports.borrowBook = async (req, res) => {
+  try {
+    const { bookTitle, borrowStatus, borrowedBy, issuedBy, returnDate } = req.body
+    
+    const setReturn = await Book.findOne({title: bookTitle})
 
-//   return req.send("This is a confirmation")
-  res.send(req.body.message)
+    if (!setReturn){
+      return res.status(500).json({"message": "The library does not have a book with that name"})
+    };
+    const saveChanges = setReturn({
+      borrowStatus, borrowBook,
+      borrowedBy: borrowedBy,
+      issuedBy: issuedBy,
+      returnDate: returnDate
+    })
+
+  } catch (error) {
+    return res.status(500).json({error: error.message})
+  }
 };
 
 // module.exports = {

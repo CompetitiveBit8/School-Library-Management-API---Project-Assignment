@@ -1,17 +1,23 @@
 import express from "express"
+import { v4 as uuidv4 } from 'uuid'
 import LibraryAttendant from "../models/libraryAttendantModel.js";
 
 const router = express.Router()
 
 router.post('/', async (req, res) => {
  try {
-        const newAttendant = req.body.name
+        const newAttendant = req.body.newAttendant
+        // const {newAttendant, staffId} = req.body
+        // const staffId = uuidv4();
+        
         //confirm if the name inputted exists already
         const attendantExists = await LibraryAttendant.findOne({name: newAttendant})
         
+
         if (attendantExists){ 
           return res.status(401).json({"message": `Library, ${newAttendant} already exists`})
         }
+        
         //if not
         const newAttendantSave = new LibraryAttendant({
             name: newAttendant

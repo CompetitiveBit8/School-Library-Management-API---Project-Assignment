@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
         const authorExists = await Author.findOne({name: newAuthor})
         
         if (authorExists){ 
-          return res.status(401).json({"message": `Author, ${newAuthor} already exists`})
+          return res.status(401).json({"message": `Library attendant, ${newAuthor} already exists`})
         }
         //if not
         const newAuthorSave = new Author({
