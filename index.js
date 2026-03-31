@@ -4,6 +4,7 @@ import author from "./routes/author.js"
 import book from "./routes/books.js"
 import student from "./routes/student.js"
 import libraryAttendant from "./routes/libraryAttendant.js"
+import borrowBook from "./controllers/BorrowAndReturn.js";
    
 const app = express()
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use('/author', author);
 app.use('/books', book);
 app.use('/student', student);
 app.use('/Attendant', libraryAttendant);
+app.use('/borrowbook', borrowBook);
 
 
 //connection to mongose database
