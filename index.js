@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import author from "./routes/author.js"
 import book from "./routes/books.js"
 import student from "./routes/student.js"
+import borowReturn from "./routes/borrowAndReturn.js"
 import libraryAttendant from "./routes/libraryAttendant.js"
-import borrowBook from "./controllers/BorrowAndReturn.js";
    
 const app = express()
 app.use(express.json())
@@ -14,12 +14,13 @@ app.get('/', (req, res) => {
     res.send("Welcome to the homepage");
 });
 
+
 //routes
 app.use('/author', author);
 app.use('/books', book);
 app.use('/student', student);
 app.use('/Attendant', libraryAttendant);
-app.use('/borrowbook', borrowBook);
+app.use('/borrowandreturn', borowReturn);
 
 
 //connection to mongose database

@@ -1,9 +1,9 @@
 import express from 'express';
 import Book from "../models/bookModel.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-const borrowBook = async (req, res) => {
+export const borrowBook = async (req, res) => {
   try {
     const { bookId, borrowStatus, borrowedBy, issuedBy, returnDate } = req.body
     
@@ -31,7 +31,7 @@ const borrowBook = async (req, res) => {
 };
 
 // Return Book Endpoint
-router.post('/books/:id/return', async (req, res) => {
+export const returnBook = async (req, res) => {
     try {
         // 1. Get book ID from params
         const { id } = req.params;
@@ -66,7 +66,10 @@ router.post('/books/:id/return', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
-
-export { borrowBook };
-export default router;
+};
+      
+// module.exports = { borrowBook, returnBook };
+  // export {
+  //     borrowBook,
+  //     returnBook
+  // }
