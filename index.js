@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import author from "./routes/author.js"
 import book from "./routes/books.js"
 import student from "./routes/student.js"
-import borowReturn from "./routes/borrowAndReturn.js"
+// import borrowReturn from "./routes/borrowAndReturn"
 import libraryAttendant from "./routes/libraryAttendant.js"
    
 const app = express()
@@ -20,7 +20,7 @@ app.use('/author', author);
 app.use('/books', book);
 app.use('/student', student);
 app.use('/Attendant', libraryAttendant);
-app.use('/borrowandreturn', borowReturn);
+// app.use('/borrowandreturn', borrowReturn);
 
 
 //connection to mongose database
